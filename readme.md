@@ -1,32 +1,56 @@
-const Playlist = require("../models/Playlist.model");
+# Homework module 2.3
 
-class PlaylistRepository {
-  constructor() {
-    // Simulasi data playlist dalam array
-    this.playlists = [];
+## Installation
+
+1. please clone this repository
+2. do this `npm install` in your project
+3. `npm run dev` for run the nodemon
+4. I was not used database sql or noSQL just save in memory
+
+## MVP
+
+- [x] Make playlist as a model
+- [x] Track song play count in the playlist
+- [x] Add feature to Get list of songs to be sorted by most played
+
+## Make playlist as a model
+
+### Playlist model
+
+```javascript
+class Playlist {
+  constructor(id, name, songs) {
+    this.id = id;
+    this.name = name;
+    this.songs = songs;
   }
+}
 
-  createPlaylist(data) {
-    const id = this.playlists.length + 1;
-    const newPlaylist = new Playlist(id, data.name);
-    newPlaylist.songs = [];
-    this.playlists.push(newPlaylist);
-    return newPlaylist;
+module.exports = Playlist;
+```
+
+### SongModel
+
+```javascript
+class Songs {
+  constructor(uuid, name, artist, genre, year, album, duration) {
+    this.uuid = uuid;
+    this.name = name;
+    this.artist = artist;
+    this.genre = genre;
+    this.year = year;
+    this.album = album;
+    this.duration = duration;
   }
+}
 
-  getAllPlaylists() {
-    return this.playlists;
-  }
+module.exports = Songs;
+```
 
-  getPlaylistById(id) {
-    return this.playlists.find((playlist) => playlist.id === id);
-  }
+## Track song play count in the playlist
 
-  getPlaylistByName(name) {
-    return this.playlists.find((playlist) => playlist.name === name);
-  }
-
-  updatePlaylist(data) {
+```js
+updatePlaylist(data) {
     const index = this.playlists.findIndex((p) => p.id === data.id);
     if (index !== -1) {
       const existingSongIndex = this.playlists[index].songs.findIndex(
@@ -45,8 +69,12 @@ class PlaylistRepository {
     }
     return false;
   }
+```
 
-  sortSongs(playlistId) {
+## Add feature to Get list of songs to be sorted by most played
+
+```js
+sortSongs(playlistId) {
     const index = this.playlists.findIndex((p) => p.id === playlistId);
 
     if (index !== -1) {
@@ -62,6 +90,4 @@ class PlaylistRepository {
     console.log("Playlist not found");
     return null; // Return null when the playlist is not found
   }
-}
-
-module.exports = PlaylistRepository;
+```

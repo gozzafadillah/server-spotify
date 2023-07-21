@@ -46,25 +46,11 @@ class PlaylistService {
     if (!songs) {
       return false;
     }
-    this.updatePlaylist({ id: dataPlaylist.id, songs: songs });
-    return true;
-  }
-
-  incrementSongPlayCount(playlistId, songId) {
-    const playlist = this.getPlaylistById(playlistId);
-    if (!playlist) {
-      return false;
-    }
-
-    const song = playlist.songs.find((song) => song.uuid === songId);
-    if (!song) {
-      return false;
-    }
-
-    song.playCount++;
-    this.songService.updateSong(song);
-    this.updatePlaylist(playlist);
-    return true;
+    const ressponse = this.updatePlaylist({
+      id: dataPlaylist.id,
+      songs: songs,
+    });
+    return ressponse;
   }
 
   getMostPlayedSongs(playlistId) {

@@ -60,11 +60,11 @@ class PlaylistController {
       Number(playlistId),
       Number(songId)
     );
-    if (success) {
+    if (success != false) {
       res.json({
         status: "success",
         message: "Song added to playlist",
-        data: null,
+        data: success,
       });
     } else {
       res.status(404).json({
